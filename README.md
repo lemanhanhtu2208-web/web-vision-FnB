@@ -15,8 +15,8 @@ Kế hoạch giai đoạn 1: xem `ke-hoach-giai-doan-1.md` trong project.
 
 ### 2. Lấy code
 ```powershell
-git clone https://github.com/lemanhanhtu2208-web/vision-fnb.git
-cd vision-fnb
+git clone https://github.com/lemanhanhtu2208-web/web-vision-FnB.git
+cd web-vision-FnB
 npm install
 ```
 
@@ -40,7 +40,7 @@ Mở http://localhost:3000.
 Lệnh khác: `npm run build` (build production), `npm run lint` (kiểm tra code).
 
 ## Deploy lên Vercel
-1. Đăng nhập https://vercel.com bằng GitHub → **Add New → Project** → chọn repo `vision-fnb`.
+1. Đăng nhập https://vercel.com bằng GitHub → **Add New → Project** → chọn repo `web-vision-FnB`.
 2. Ở **Environment Variables**, dán các biến giống `.env.local`.
 3. Bấm **Deploy**. Mỗi lần push lên nhánh `main` Vercel tự deploy lại.
 
