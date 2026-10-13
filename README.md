@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vision FnB
 
-## Getting Started
+Nền tảng AI tạo nội dung marketing cho quán F&B Việt Nam (cà phê, nhà hàng, tiệm bánh, trà sữa, đồ ăn vặt).
 
-First, run the development server:
+Stack: Next.js 15 (App Router, TypeScript) · Tailwind CSS v4 · Supabase · Vercel.
+Kế hoạch giai đoạn 1: xem `ke-hoach-giai-doan-1.md` trong project.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Chạy trên Windows
+
+### 1. Cài công cụ (một lần)
+- **Node.js 20 LTS trở lên**: tải bản LTS ở https://nodejs.org, cài mặc định.
+  Kiểm tra trong PowerShell: `node -v` và `npm -v`.
+- **Git**: https://git-scm.com/download/win (để mặc định).
+- Trình soạn code: VS Code.
+
+### 2. Lấy code
+```powershell
+git clone https://github.com/lemanhanhtu2208-web/vision-fnb.git
+cd vision-fnb
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Biến môi trường
+```powershell
+Copy-Item .env.example .env.local
+```
+Mở `.env.local` và điền:
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`:
+  vào https://supabase.com → tạo project (region Singapore cho gần VN) → **Project Settings → API**.
+- Các biến còn lại để trống, sẽ cần ở các bước sau.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> Biến có tiền tố `NEXT_PUBLIC_` sẽ lộ ra trình duyệt. Mọi API key bí mật (service role, AI, SePay) **không bao giờ** được có tiền tố này.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Chạy
+```powershell
+npm run dev
+```
+Mở http://localhost:3000.
 
-## Learn More
+Lệnh khác: `npm run build` (build production), `npm run lint` (kiểm tra code).
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy lên Vercel
+1. Đăng nhập https://vercel.com bằng GitHub → **Add New → Project** → chọn repo `vision-fnb`.
+2. Ở **Environment Variables**, dán các biến giống `.env.local`.
+3. Bấm **Deploy**. Mỗi lần push lên nhánh `main` Vercel tự deploy lại.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> Lưu ý: gói Hobby (miễn phí) của Vercel không cho dùng thương mại. Khi bắt đầu thu tiền thật cần lên Pro hoặc chuyển nơi deploy.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Cấu trúc thư mục
+```
+app/            Trang và API (App Router)
+lib/supabase/   client.ts (trình duyệt) · server.ts (server, theo phiên) · admin.ts (service role, chỉ server)
+public/         Ảnh, video tĩnh
+```

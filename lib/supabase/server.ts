@@ -1,0 +1,26 @@
+import "server-only";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+
+// Dùng trong Server Component, Server Action, Route Handler. Phiên đăng nhập lấy từ cookie.
+export async function createClient() {
+  const cookieStore = await cookies();
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => cookieStore.getAll(),
+        setAll: (toSet) => {
+          try {
+            toSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options),
+            );
+          } catch {
+            // Gọi từ Server Component: bỏ qua, middleware sẽ làm mới phiên.
+          }
+        },
+      },
+    },
+  );
+}
